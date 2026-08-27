@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0C7A5E">
+<title>Lending Lab — small loans for businesses &amp; charities · powered by Chelcie</title>
+<meta name="description" content="Fast, transparent small loans for small businesses and 501(c)(3) charities. Connect once, qualify in minutes, and go from application to funding — powered by Chelcie.">
+<meta name="color-scheme" content="light">
+<meta property="og:title" content="Lending Lab — small loans for businesses &amp; charities">
+<meta property="og:description" content="Fast, transparent small loans for small businesses and 501(c)(3) charities — powered by Chelcie.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Favicon: inline SVG data-URI (keeps the whole page self-contained in one file) -->
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%230C7A5E"/><path d="M22 16v32M22 24h13a9 9 0 0 1 9 9v16" fill="none" stroke="%23EDE7D9" stroke-width="5" stroke-linecap="square"/></svg>'>
+<!-- Fonts: warm editorial serif + clean sans + monospace micro-labels.
+     External CDN link; robust system fallbacks so it still reads well offline. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Lending Lab · powered by Chelcie
+   Design system tuned to chelcie's look:
+   - warm paper + ink, emerald "electric" accent, mint + sand soft panels
+   - hard-ish edges, generous spacing, editorial serif display
+   - monospace uppercase micro-labels (kickers)
+   ========================================================= */
+:root{
+  --paper:#F5F1E8;          /* page background, warm */
+  --paper-2:#FBFAF4;        /* raised surface */
+  --white:#FFFFFF;
+  --ink:#15211D;            /* headings / primary text */
+  --ink-soft:#39473F;
+  --muted:#5E6B64;         /* body muted */
+  --muted-2:#8B948E;       /* faint text / meta */
+  --line:#E6E0D3;          /* borders */
+  --line-strong:#D5CEBE;
+  --emerald:#0C7A5E;       /* primary accent / CTA */
+  --emerald-deep:#0A5E49;  /* hover */
+  --emerald-ink:#04382B;   /* text on mint */
+  --mint:#E4F1EA;          /* soft emerald panel */
+  --mint-2:#D7E8DE;
+  --sand:#F0E6D1;          /* warm accent panel */
+  --amber:#8A5A12;         /* warm warning text */
+  --danger:#B23A2E;
+
+  --radius:10px;
+  --radius-sm:7px;
+  --maxw:1160px;
+  --gutter:clamp(1.125rem, 4vw, 2.25rem);
+  --sec:clamp(3.5rem, 8vw, 6.5rem);
+
+  --serif:"Fraunces", Georgia, "Times New Roman", serif;
+  --sans:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --shadow-sm:0 1px 2px rgba(21,33,29,.05);
+  --shadow:0 8px 24px -12px rgba(21,33,29,.18);
+  --shadow-lg:0 24px 60px -24px rgba(21,33,29,.28);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--paper);color:var(--ink-soft);
+  font-family:var(--sans);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,svg{max-width:100%;height:auto;display:block}
+a{color:var(--emerald-ink);text-decoration:none}
+h1,h2,h3{font-family:var(--serif);color:var(--ink);font-weight:600;line-height:1.08;letter-spacing:-.012em;margin:0}
+h1{font-size:clamp(2.35rem,5.2vw,4rem)}
+h2{font-size:clamp(1.75rem,3.4vw,2.6rem)}
+h3{font-size:1.15rem;letter-spacing:-.01em}
+p{margin:0}
+code,pre,kbd{font-family:var(--mono)}
+
+/* layout helpers */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+section{padding-block:var(--sec)}
+.kicker{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--emerald);display:inline-flex;align-items:center;gap:.55em}
+.kicker::before{content:"";width:1.5em;height:1px;background:currentColor;opacity:.55}
+.lead{font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--muted);max-width:46ch;line-height:1.55}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.stack-sm>*+*{margin-top:.5rem}.stack>*+*{margin-top:1rem}
+.grid{display:grid;gap:1.1rem}
+@media(min-width:720px){.grid.cols-2{grid-template-columns:1fr 1fr}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr)}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55em;
+  font-family:var(--sans);font-weight:600;font-size:.95rem;line-height:1;
+  padding:.9rem 1.35rem;border-radius:var(--radius-sm);border:1px solid transparent;
+  cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .12s ease;text-decoration:none}
+.btn svg{width:1em;height:1em}
+.btn-primary{background:var(--emerald);color:#fff}
+.btn-primary:hover{background:var(--emerald-deep)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--emerald);color:var(--emerald-ink)}
+.btn-block{width:100%}
+
+/* kicker row / section header */
+.shead{max-width:60ch}
+.shead .h{margin-top:1rem}
+.shead p{margin-top:1rem}
+
+/* card */
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.6rem;box-shadow:var(--shadow-sm);transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.card:hover{border-color:var(--emerald);box-shadow:var(--shadow)}
+.card .idx{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;color:var(--muted-2);text-transform:uppercase}
+.card h3{margin-top:.9rem}
+.card .desc{margin-top:.55rem;color:var(--muted);font-size:.96rem}
+.card .num{font-family:var(--serif);font-size:2rem;color:var(--emerald-ink);line-height:1}
+
+/* tag */
+.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--emerald);background:var(--mint);border:1px solid var(--mint-2);
+  padding:.28em .6em;border-radius:999px;white-space:nowrap}
+
+/* ---- nav ---- */
+.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 84%,transparent);
+  backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid transparent;transition:border-color .2s ease,background .2s ease}
+.nav.scrolled{border-color:var(--line);background:color-mix(in srgb,var(--paper) 94%,transparent)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.85rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-weight:600;
+  letter-spacing:.02em;color:var(--ink);font-size:1rem}
+.brand .mark{width:30px;height:30px;flex:0 0 auto;border-radius:8px;background:var(--emerald);position:relative}
+.brand .mark::before{content:"";position:absolute;inset:8px 8px 8px auto;width:5px;background:#EDE7D9}
+.brand .mark::after{content:"";position:absolute;left:13px;top:8px;width:16px;height:5px;background:#EDE7D9}
+.brand small{display:block;font-family:var(--mono);font-weight:400;font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted-2);margin-top:1px}
+.nav-links{display:none;align-items:center;gap:1.6rem;font-size:.9rem;font-weight:500;color:var(--ink-soft)}
+.nav-links a{color:var(--ink-soft)}
+.nav-links a:hover{color:var(--emerald-ink)}
+.nav-cta{display:none}
+.nav-toggle{display:inline-flex;border:1px solid var(--line);background:var(--white);border-radius:8px;
+  width:42px;height:42px;align-items:center;justify-content:center;cursor:pointer}
+@media(min-width:900px){
+  .nav-links{display:flex}.nav-cta{display:inline-flex}.nav-toggle{display:none}
+}
+.mobile-menu{display:none;border-top:1px solid var(--line);background:var(--paper)}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:.9rem var(--gutter);border-bottom:1px solid var(--line);color:var(--ink-soft);font-weight:500}
+
+/* ---- hero ---- */
+.hero{padding-top:clamp(3rem,7vw,5.5rem);position:relative;overflow:hidden}
+.hero-grid{display:grid;gap:2.5rem;align-items:start}
+@media(min-width:960px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:3rem}}
+.hero h1{margin-top:1.4rem;letter-spacing:-.02em}
+.hero .lead{margin-top:1.4rem;max-width:52ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2rem}
+.hero .note{margin-top:1.1rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted-2);display:flex;align-items:center;gap:.5rem}
+.dotlive{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 0 4px color-mix(in srgb,var(--emerald) 18%,transparent);display:inline-block}
+
+/* capital-map preview card (echoes chelcie's "every source you qualify for") */
+.mapcard{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden}
+.mapcard .mc-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--line);background:var(--paper-2)}
+.mapcard .mc-head .t{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.mc-row{display:flex;align-items:center;gap:.85rem;padding:.9rem 1.2rem;border-bottom:1px solid var(--line)}
+.mc-row:last-child{border-bottom:0}
+.mc-ic{width:34px;height:34px;border-radius:8px;background:var(--mint);color:var(--emerald-ink);display:grid;place-items:center;flex:0 0 auto}
+.mc-ic svg{width:18px;height:18px}
+.mc-row .lbl{flex:1}.mc-row .lbl b{display:block;color:var(--ink);font-weight:600;font-size:.95rem}
+.mc-row .lbl span{font-size:.8rem;color:var(--muted)}
+.mc-row .st{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.28em .6em;border-radius:999px}
+.st-ok{background:var(--mint);color:var(--emerald-ink)}.st-wait{background:var(--sand);color:var(--amber)}
+.mapcard .mc-cta{padding:1.1rem 1.2rem;background:var(--paper-2)}
+.mapcard .mc-cta .cap{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);text-align:center;margin-top:.8rem}
+
+/* trust strip */
+.trust{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:720px){.trust{grid-template-columns:repeat(4,1fr)}}
+.trust .cell{border-left:2px solid var(--mint-2);padding-left:1rem}
+.trust .cell .n{font-family:var(--serif);font-size:1.7rem;color:var(--ink);line-height:1}
+.trust .cell .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+
+/* step (how it works) */
+.step{position:relative;padding-top:1.3rem;border-top:1px solid var(--line)}
+.step .idx{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;color:var(--emerald);text-transform:uppercase}
+.step h3{margin-top:.55rem}
+.step p{margin-top:.5rem;color:var(--muted);font-size:.94rem}
+
+/* soft panel */
+.panel{background:var(--mint);border:1px solid var(--mint-2);border-radius:var(--radius);padding:2rem}
+.panel.sand{background:var(--sand);border-color:#E3D6B8}
+
+/* checklist */
+.check{list-style:none;padding:0;margin:0;display:grid;gap:.75rem}
+.check li{display:flex;gap:.7rem;align-items:flex-start;color:var(--ink-soft)}
+.check svg{flex:0 0 auto;width:20px;height:20px;color:var(--emerald);margin-top:2px}
+
+/* estimator */
+.est{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow-sm)}
+.est .row{margin-top:1.3rem}
+.est label{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--ink);font-weight:500}
+.est label .val{font-family:var(--mono);color:var(--emerald-ink);font-weight:600}
+.est input[type=range]{width:100%;margin-top:.6rem;accent-color:var(--emerald);height:4px}
+.est .terms{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+.est .terms button{font-family:var(--mono);font-size:.8rem;padding:.45rem .8rem;border:1px solid var(--line-strong);background:var(--paper-2);border-radius:999px;cursor:pointer;color:var(--muted)}
+.est .terms button[aria-pressed=true]{background:var(--emerald);color:#fff;border-color:var(--emerald)}
+.est .out{margin-top:1.4rem;padding-top:1.2rem;border-top:1px dashed var(--line-strong)}
+.est .out .big{font-family:var(--serif);font-size:2.2rem;color:var(--ink);line-height:1}
+.est .out small{display:block;margin-top:.4rem;color:var(--muted);font-size:.82rem}
+.disclaimer{font-size:.8rem;color:var(--muted);line-height:1.5}
+
+/* faq */
+details{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--white);padding:1rem 1.2rem;margin-top:.8rem;box-shadow:var(--shadow-sm)}
+details summary{cursor:pointer;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary .plus{font-family:var(--mono);color:var(--emerald);transition:transform .2s ease}
+details[open] summary .plus{transform:rotate(45deg)}
+details .a{margin-top:.8rem;color:var(--muted);font-size:.94rem;line-height:1.6}
+
+/* final cta band */
+.ctaband{background:var(--ink);color:#E9E3D6;border-radius:clamp(14px,3vw,28px);padding:clamp(2rem,5vw,4rem);text-align:center;position:relative;overflow:hidden}
+.ctaband h2{color:#fff}
+.ctaband .kicker{color:#8FD8BC}.ctaband .kicker::before{background:#8FD8BC}
+.ctaband p{color:#C9C4B7;max-width:40ch;margin:1rem auto 0}
+.ctaband .btn-primary{margin-top:2rem}
+
+/* footer */
+footer{border-top:1px solid var(--line);background:var(--paper-2);padding-block:3rem 2rem}
+.foot-grid{display:grid;gap:2rem;grid-template-columns:1.4fr 1fr 1fr 1fr}
+@media(max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
+.foot h4{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem;font-weight:600}
+.foot a,.foot .line{display:block;color:var(--ink-soft);font-size:.9rem;margin:.45rem 0;text-decoration:none}
+.foot a:hover{color:var(--emerald-ink)}
+.foot .line{color:var(--muted);font-size:.82rem;line-height:1.5}
+.discl{margin-top:2.5rem;padding-top:1.6rem;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted);line-height:1.6;display:grid;gap:.9rem}
+.discl strong{color:var(--ink-soft)}
+.copyrow{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:1.5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--muted-2);text-transform:uppercase}
+
+/* funding widget mount (below) */
+.lf-wrap{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.4rem;text-align:center}
+.lf-wrap .lf-cap{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-top:1rem}
+.lf-fallback{margin-top:1rem}
+.lf-fallback a{color:var(--emerald);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+
+/* skip link */
+.skip{position:absolute;left:-999px;top:0;background:var(--emerald);color:#fff;padding:.6rem 1rem;border-radius:6px;z-index:100}
+.skip:focus{left:1rem;top:1rem}
+
+/* funding widget mount (the widget appears here on click) */
+#lf-apply-mount{min-height:120px}
+</style>
+</head>
+<body>
+<a class="skip" href="#apply">Skip to start funding</a>
+
+<!-- ============================ NAV ============================ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Lending Lab home">
+      <span class="mark" aria-hidden="true"></span>
+      <span>Lending&nbsp;Lab<small>Powered by Chelcie</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#fund">Who we fund</a>
+      <a href="#product">Loan</a>
+      <a href="#eligibility">Eligibility</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary nav-cta" href="#apply">Start funding
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how">How it works</a>
+    <a href="#fund">Who we fund</a>
+    <a href="#product">Loan</a>
+    <a href="#eligibility">Eligibility</a>
+    <a href="#faq">FAQ</a>
+    <a href="#apply" style="color:var(--emerald);font-weight:600">Start funding →</a>
+  </div>
+</nav>
+
+<main id="top">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="kicker">Lending Lab · powered by Chelcie</span>
+          <h1>Capital that keeps pace with the work you’re doing.</h1>
+          <p class="lead">Fast, transparent small loans for <strong style="color:var(--ink-soft)">small businesses</strong> and <strong style="color:var(--ink-soft)">501(c)(3) charities</strong>. Connect once, qualify in minutes, and go from application to funding — without the maze of forms and calls.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#apply">Start funding
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#how">See how it works</a>
+          </div>
+          <p class="note"><span class="dotlive"></span> Indicative terms below. Actual credit offered by our lending partners at approval.</p>
+        </div>
+
+        <!-- capital-map preview: echoes chelcie's "every source you qualify for" -->
+        <div class="mapcard reveal" aria-label="Preview of matched capital sources">
+          <div class="mc-head">
+            <span class="t">Capital access · live</span>
+            <span class="tag">sandbox</span>
+          </div>
+          <div class="mc-row">
+            <span class="mc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
+            <span class="lbl"><b>Small-business loans</b><span>Working capital, equipment, inventory</span></span>
+            <span class="st st-ok">Eligible</span>
+          </div>
+          <div class="mc-row">
+            <span class="mc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 22v-2M4.9 4.9l4.2 4.2M19.1 19.1l-4.2-4.2M2 12h6M22 12h-2M4.9 19.1l4.2-4.2M19.1 4.9l-4.2 4.2"/></svg></span>
+            <span class="lbl"><b>Charity &amp; nonprofit funding</b><span>501(c)(3) program &amp; operating liquidity</span></span>
+            <span class="st st-ok">Eligible</span>
+          </div>
+          <div class="mc-row">
+            <span class="mc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM4 9h16M9 4v16"/></svg></span>
+            <span class="lbl"><b>Grants &amp; state programs</b><span>Matched alongside your loan</span></span>
+            <span class="st st-wait">Scanning</span>
+          </div>
+          <div class="mc-cta">
+            <a class="btn btn-primary btn-block" href="#apply">Open your application
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <p class="cap">Decision in minutes</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ TRUST STRIP ============================ -->
+    <section style="padding-block:0">
+      <div class="wrap">
+        <div class="trust" style="padding-block:2.2rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+          <div class="cell"><div class="n">1–2 days</div><div class="k">To first funds · indicative</div></div>
+          <div class="cell"><div class="n">$2.5k–$75k</div><div class="k">Loan range · indicative</div></div>
+          <div class="cell"><div class="n">6 · 12 · 24 · 36</div><div class="k">Repayment terms · months</div></div>
+          <div class="cell"><div class="n">0.95</div><div class="k">Source-match confidence*</div></div>
+        </div>
+        <p class="disclaimer center" style="margin-top:1rem;max-width:70ch;margin-left:auto;margin-right:auto">*Indicative only. Amounts and timing are illustrative and not a guarantee of approval, specific terms, or a commitment to fund. Final eligibility, rate, and terms are determined by the lender of record at application.</p>
+      </div>
+    </section>
+    
+       <!-- ============================ HOW IT WORKS ============================ -->
+       <section id="how">
+         <div class="wrap">
+           <div class="shead reveal">
+             <span class="kicker">How it works</span>
+             <h2 class="h">From idea to funding, in four structured steps</h2>
+             <p class="lead">No branches, no paperwork mountain. Connect once and we do the matching and coordination — you approve and receive.</p>
+           </div>
+           <div class="grid cols-2" style="margin-top:2.5rem">
+             <div class="step card reveal">
+               <span class="idx">Step 01 · Connect</span>
+               <h3>Link or upload</h3>
+               <p>Securely link your business or nonprofit accounts, or upload a recent statement. Setup takes minutes — no account-hopping.</p>
+             </div>
+             <div class="step card reveal">
+               <span class="idx">Step 02 · Match</span>
+               <h3>We surface your options</h3>
+               <p>Chelcie scans every source you qualify for — small-business loans, nonprofit funding, grants, and state programs — and prioritizes by fit.</p>
+             </div>
+             <div class="step card reveal">
+               <span class="idx">Step 03 · Underwrite</span>
+               <h3>Transparent decision</h3>
+               <p>A fast, data-driven review returns a clear decision and a plain-language quote — every rate and fee disclosed up front.</p>
+             </div>
+             <div class="step card reveal">
+               <span class="idx">Step 04 · Fund</span>
+               <h3>Accept and receive</h3>
+               <p>Approve your terms and funds are routed to your account, as fast as the next day. Repayment runs on a schedule you can always see.</p>
+             </div>
+           </div>
+         </div>
+       </section>
+
+       <!-- ============================ WHO WE FUND ============================ -->
+       <section id="fund" style="background:var(--paper-2);border-block:1px solid var(--line)">
+         <div class="wrap">
+           <div class="shead reveal">
+             <span class="kicker">Who we fund</span>
+             <h2 class="h">Built for the organizations banks overlook</h2>
+             <p class="lead">Two audiences, one simple application. Chelcie matches you to the capital that fits your mission and scale.</p>
+           </div>
+           <div class="grid cols-2" style="margin-top:2.5rem">
+             <div class="card reveal">
+               <span class="tag">Small businesses</span>
+               <h3 style="margin-top:1rem">For the shops, studios, and service firms keeping neighborhoods running</h3>
+               <p class="desc">Working capital, equipment, inventory builds, and cash-flow bridges for small and independent businesses — including early-stage and first-time borrowers.</p>
+               <ul class="check" style="margin-top:1.2rem">
+                 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> No minimum time-in-business required for some terms*</li>
+                 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Funds a bank or card, as fast as the next day</li>
+                 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> One simple application, reviewed the same day</li>
+               </ul>
+             </div>
+             <div class="card reveal">
+               <span class="tag">501(c)(3) &amp; nonprofits</span>
+               <h3 style="margin-top:1rem">For the charities and nonprofits the community relies on</h3>
+               <p class="desc">Program funding and operating liquidity for registered charities and 501(c)(3) organizations — from local food banks to community foundations.</p>
+               <ul class="check" style="margin-top:1.2rem">
+                 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Eligible uses include programs, payroll, and reserves</li>
+                 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Matched alongside eligible grants &amp; state programs</li>
+                 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Mission-fit terms, not one-size-fits-all rates</li>
+               </ul>
+             </div>
+           </div>
+           <p class="disclaimer" style="margin-top:1.4rem">*Illustrative. Some loans may require a minimum operating history. Final eligibility is determined by the lender of record at application.</p>
+         </div>
+       </section>
+       
+
+        <!-- ============================ THE LOAN ============================ -->
+        <section id="product">
+          <div class="wrap">
+            <div class="shead reveal">
+              <span class="kicker">The loan</span>
+              <h2 class="h">Small loans, sized to your need</h2>
+              <p class="lead">One application. Transparent terms. Whether you’re bridging cash flow, buying equipment, or keeping a program running, Chelcie matches your loan to how you actually operate.</p>
+            </div>
+
+            <div class="grid cols-2" style="margin-top:2.6rem;align-items:start">
+              <div class="reveal">
+                <h3 style="font-size:1.05rem;font-family:var(--sans);letter-spacing:0;margin-bottom:1rem">What you get</h3>
+                <div class="card" style="padding:0;overflow:hidden">
+                  <div class="row" style="display:flex;justify-content:space-between;gap:1rem;padding:1rem 1.3rem;border-bottom:1px solid var(--line)"><div><b style="color:var(--ink);font-weight:600">Loan amount</b><div class="desc" style="margin:0">Indicative range</div></div><div style="text-align:right"><span class="idx" style="font-size:1rem;color:var(--emerald-ink)">$2.5k – $75k</span></div></div>
+                  <div class="row" style="display:flex;justify-content:space-between;gap:1rem;padding:1rem 1.3rem;border-bottom:1px solid var(--line)"><div><b style="color:var(--ink);font-weight:600">Repayment term</b><div class="desc" style="margin:0">Months</div></div><div style="text-align:right"><span class="idx" style="font-size:.9rem;color:var(--emerald-ink)">6 · 12 · 18 · 24 · 36</span></div></div>
+                  <div class="row" style="display:flex;justify-content:space-between;gap:1rem;padding:1rem 1.3rem;border-bottom:1px solid var(--line)"><div><b style="color:var(--ink);font-weight:600">Decision speed</b><div class="desc" style="margin:0">Most applications</div></div><div style="text-align:right"><span class="idx" style="font-size:.9rem;color:var(--emerald-ink)">Same day*</span></div></div>
+                  <div class="row" style="display:flex;justify-content:space-between;gap:1rem;padding:1rem 1.3rem;border-bottom:1px solid var(--line)"><div><b style="color:var(--ink);font-weight:600">First funds</b><div class="desc" style="margin:0">After approval</div></div><div style="text-align:right"><span class="idx" style="font-size:.9rem;color:var(--emerald-ink)">1–2 days*</span></div></div>
+                  <div class="row" style="display:flex;justify-content:space-between;gap:1rem;padding:1rem 1.3rem"><div><b style="color:var(--ink);font-weight:600">Eligibility</b><div class="desc" style="margin:0">See requirements</div></div><div style="text-align:right"><a class="btn btn-ghost" style="padding:.5rem .9rem;font-size:.8rem" href="#eligibility">Check →</a></div></div>
+                </div>
+                <p class="disclaimer" style="margin-top:1rem">*All terms (rate, fees, total, timing) are indicative and are disclosed precisely within your quote at the point of application. No account, and no impact to business credit, is created by viewing this page.</p>
+              </div>
+
+              <div class="reveal">
+                <div class="est" aria-live="polite">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline">
+                    <h3 style="font-size:1.05rem">See your range</h3>
+                    <span class="tag">Illustrative</span>
+                  </div>
+                  <div class="row">
+                    <label>How much do you need? <span class="val" id="est-amount-out">$15,000 · 12 mo</span></label>
+                    <input type="range" id="est-amount" min="2500" max="75000" step="2500" value="15000" aria-label="Requested loan amount">
+                    <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;color:var(--muted-2);margin-top:.25rem"><span>$2,500</span><span>$75,000</span></div>
+                  </div>
+                  <div class="row">
+                    <label>Repayment term</label>
+                    <div class="terms" role="group" aria-label="Repayment term">
+                      <button type="button" data-mo="6">6 mo</button>
+                      <button type="button" data-mo="12" aria-pressed="true">12 mo</button>
+                      <button type="button" data-mo="18">18 mo</button>
+                      <button type="button" data-mo="24">24 mo</button>
+                      <button type="button" data-mo="36">36 mo</button>
+                    </div>
+                  </div>
+                  <div class="out">
+                    <div class="big" id="est-out">$1,000 – $1,400 / mo</div>
+                    <small>Estimated monthly range, <strong>illustrative only</strong> — not an offered rate. Your actual APR, fees, and total of payments are disclosed at the point of your quote.</small>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-block" href="#apply" style="margin-top:1rem">Start your application
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ START FUNDING (APPLICATION MOUNT) ============================ -->
+        <section id="apply" style="background:var(--paper-2);border-block:1px solid var(--line)">
+          <div class="wrap" style="max-width:760px">
+            <div class="center reveal">
+              <span class="kicker" style="justify-content:center">Start funding</span>
+              <h2 style="margin-top:1rem">Start your funding in about 10 minutes</h2>
+              <p class="lead lead--c" style="max-width:52ch;margin:1rem auto 0">Begin your application right here. You stay with Lending Lab; our lending partners handle the credit decision and the funding. Checking your options is free and does not affect your business credit.</p>
+
+              <div class="lf-wrap center" id="lf-apply-mount" style="margin-top:2rem;max-width:460px;margin-inline:auto">
+                <!-- The widget anchor issued to this build. The loader script
+                     (below, in &lt;body&gt;) hydrates it; if it never loads, the anchor still works. -->
+                <a id="start-funding-cta" class="btn btn-primary" style="max-width:340px;margin:0 auto;display:inline-flex" href="https://sandbox-widget.lendflow.com/?env=a270d86899e74f3fb6851e17f959b319&amp;viewProduct=1&amp;brandId=290&amp;workflowTemplateId=15b9025c-874f-4a5e-a47c-0a076c2a940b&amp;emailTemplateId=53&amp;consentTemplateId=01K4ZJ2NE2C1ZA1R2XK9WEW7TW&amp;destination%5Bmode%5D=bp&amp;destination%5Burl%5D=https://sandbox-borrower.lendflow.com/?token=borrower-platform-3b71a14242394aa0a191104ab427dc46&amp;branding=290&amp;destination%5Bscript_url%5D=https://sandbox-borrower.lendflow.com/lfbp.js?token=borrower-platform-3b71a14242394aa0a191104ab427dc46&amp;branding=290">Start funding
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <div class="lf-cap">Click “Start funding” to open the application · powered by Chelcie</div>
+                <div class="lf-fallback" style="font-size:.85rem;color:var(--muted)">Prefer to open it on its own? <a href="https://sandbox-widget.lendflow.com/?env=a270d86899e74f3fb6851e17f959b319&amp;viewProduct=1&amp;brandId=290&amp;workflowTemplateId=15b9025c-874f-4a5e-a47c-0a076c2a940b&amp;emailTemplateId=53&amp;consentTemplateId=01K4ZJ2NE2C1ZA1R2XK9WEW7TW&amp;destination%5Bmode%5D=bp&amp;destination%5Burl%5D=https://sandbox-borrower.lendflow.com/?token=borrower-platform-3b71a14242394aa0a191104ab427dc46&amp;branding=290&amp;destination%5Bscript_url%5D=https://sandbox-borrower.lendflow.com/lfbp.js?token=borrower-platform-3b71a14242394aa0a191104ab427dc46&amp;branding=290" target="_blank" rel="noopener">Launch ↗</a></div>
+              </div>
+
+              <div class="grid cols-3" style="margin-top:2.5rem;max-width:680px;margin-inline:auto">
+                <div class="center"><span class="num" style="font-family:var(--serif);font-size:1.6rem;color:var(--emerald-ink);display:block">Free</span><div class="desc" style="margin-top:.3rem">to check your options</div></div>
+                <div class="center"><span class="num" style="font-family:var(--serif);font-size:1.6rem;color:var(--emerald-ink);display:block">~10 min</span><div class="desc" style="margin-top:.3rem">to apply</div></div>
+                <div class="center"><span class="num" style="font-family:var(--serif);font-size:1.6rem;color:var(--emerald-ink);display:block">Clear</span><div class="desc" style="margin-top:.3rem">terms before you commit</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+
+        <!-- ============================ WHY ============================ -->
+        <section>
+          <div class="wrap">
+            <div class="shead reveal">
+              <span class="kicker">Why Lending Lab</span>
+              <h2 class="h">Capital coordination, minus the friction</h2>
+            </div>
+            <div class="grid cols-3" style="margin-top:2.4rem">
+              <div class="card reveal">
+                <h3>Fast &amp; fully digital</h3>
+                <p class="desc">No branches, no waiting rooms. Connect your accounts or upload a statement, and move from application to funding in the time it takes to close a week.</p>
+              </div>
+              <div class="card reveal">
+                <h3>No hidden costs</h3>
+                <p class="desc">Every rate and fee is disclosed inside your quote, in plain numbers — before you commit. No origination surprises, no closing games.</p>
+              </div>
+              <div class="card reveal">
+                <h3>Built for the overlooked</h3>
+                <p class="desc">We prioritize small businesses and 501(c)(3) charities that traditional banks turn away — with mission-fit terms and same-day decisions.</p>
+              </div>
+              <div class="card reveal">
+                <h3>One connection, many sources</h3>
+                <p class="desc">Chelcie doesn’t just offer one loan. It matches your loan alongside eligible grants and state programs, so you see the whole picture.</p>
+              </div>
+              <div class="card reveal">
+                <h3>Fair by design</h3>
+                <p class="desc">We evaluate every application on its merits. We do not discriminate on any basis prohibited by the Equal Credit Opportunity Act or applicable law.</p>
+              </div>
+              <div class="card reveal">
+                <h3>Plain language</h3>
+                <p class="desc">Real terms, real totals, real repayment schedules — explained the way a human would, not buried in a twelve-page schedule you’ll never read.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ ELIGIBILITY ============================ -->
+        <section id="eligibility" style="background:var(--paper-2);border-block:1px solid var(--line)">
+          <div class="wrap">
+            <div class="shead reveal">
+              <span class="kicker">Eligibility</span>
+              <h2 class="h">Who can apply</h2>
+              <p class="lead">A short list of requirements to get you started. Final eligibility is determined by the lender of record at application.</p>
+            </div>
+            <div class="grid cols-2" style="margin-top:2.4rem">
+              <div class="card reveal">
+                <h3 style="font-size:1.05rem;font-family:var(--sans);letter-spacing:0;margin-bottom:1rem">For small businesses</h3>
+                <ul class="check">
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> A U.S.-based business, incorporated or operating as a sole proprietor</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> An active business bank account</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> At least a modest revenue history (most terms accept early-stage operations)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> A legal representative who is 18 or older</li>
+                </ul>
+              </div>
+              <div class="card reveal">
+                <h3 style="font-size:1.05rem;font-family:var(--sans);letter-spacing:0;margin-bottom:1rem">For 501(c)(3) charities &amp; nonprofits</h3>
+                <ul class="check">
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> A registered 501(c)(3) or other recognized nonprofit, charitable or religious organization in good standing</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> An organization bank account under your legal name</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Current tax filings (most recent 990 or equivalent)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> A legal representative who is 18 or older</li>
+                </ul>
+              </div>
+            </div>
+            <p class="disclaimer" style="margin-top:1.4rem">Requirements are illustrative; some programs accept applicants with shorter operating histories. Final eligibility — and the rate, term, and total disclosed to you — is determined by the lender of record at application.</p>
+          </div>
+        </section>
+
+        <!-- ============================ FAQ ============================ -->
+        <section id="faq">
+          <div class="wrap" style="max-width:820px">
+            <div class="shead reveal">
+              <span class="kicker">FAQ</span>
+              <h2 class="h">Questions you’re probably asking</h2>
+            </div>
+            <details open>
+              <summary>Does checking my options cost anything? <span class="plus">+</span></summary>
+              <div class="a">No. Checking your options on Lending Lab is free, and does not create or check your business credit. A lender of record may run a credit inquiry only if you apply and consent.</div>
+            </details>
+            <details>
+              <summary>Can 501(c)(3) charities apply? <span class="plus">+</span></summary>
+              <div class="a">Yes. We serve registered charities and 501(c)(3) organizations as well as small businesses. Eligible uses include program funding, operating liquidity, payroll, and reserves — subject to underwriting.</div>
+            </details>
+            <details>
+              <summary>Who actually extends the loan? <span class="plus">+</span></summary>
+              <div class="a">Lending Lab is powered by Chelcie, a capital-coordination layer. Our lending partners set credit terms, approve or decline applications, disburse funds, and receive repayment. Chelcie matches you to available capital — including loans, grants, and eligible programs.</div>
+            </details>
+            <details>
+              <summary>How fast can I get funds? <span class="plus">+</span></summary>
+              <div class="a">Most applications are reviewed within a day, and first funds often arrive within 1–2 business days after approval. These are indicative targets only; actual timing depends on underwriting, verification, and disbursement.</div>
+            </details>
+            <details>
+              <summary>What can I use the loan for? <span class="plus">+</span></summary>
+              <div class="a">Generally: working capital, inventory, equipment, seasonal bridging, and — for nonprofits — program and operating liquidity. Permitted and prohibited uses are disclosed precisely in your quote. Some loan programs may restrict specific uses.</div>
+            </details>
+            <details>
+              <summary>What if I’m not approved? <span class="plus">+</span></summary>
+              <div class="a">A declination does not obligate you to anything. You’ll receive a clear reason when available, and you’re welcome to apply again or revisit when your circumstances change. There is no fee for a declination.</div>
+            </details>
+            <details>
+              <summary>Is this an offer of credit? <span class="plus">+</span></summary>
+              <div class="a">No. Amounts, rates, terms, and timing shown on this page are for illustration only and do not constitute an offer, commitment, or pre-qualification of credit. The binding terms — including APR, fees, and total of payments — are disclosed in the application before you agree to anything.</div>
+            </details>
+            <details>
+              <summary>Will you sell my data? <span class="plus">+</span></summary>
+              <div class="a">We do not sell your data. Information you provide is used to coordinate your capital access, process your application through our lending partners, and keep you safe — in line with our Privacy Policy. See <a href="mailto:privacy@chelcie.app">privacy@chelcie.app</a> for questions.</div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ============================ FINAL CTA ============================ -->
+        <section>
+          <div class="wrap">
+            <div class="ctaband">
+              <span class="kicker">Start funding</span>
+              <h2 style="margin-top:1rem">Ready when you are.</h2>
+              <p>One application. Transparent terms. Funding that keeps pace with your mission — not the other way around.</p>
+              <a class="btn btn-primary" href="#apply">Start funding
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </section>
+        
+
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:1rem">
+          <span class="mark" aria-hidden="true"></span>
+          <span>Lending&nbsp;Lab<small>Powered by Chelcie</small></span>
+        </a>
+        <p class="line">Fast, transparent small loans for small businesses and <strong style="color:var(--ink-soft)">501(c)(3)</strong> charities — matched and delivered through our capital partners.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <a href="#how">How it works</a>
+        <a href="#fund">Who we fund</a>
+        <a href="#product">The loan</a>
+        <a href="#apply">Start funding</a>
+      </div>
+      <div>
+        <h4>Company &amp; legal</h4>
+        <a href="#faq">FAQ</a>
+        <span class="line">Terms of service</span>
+        <span class="line">Privacy policy</span>
+        <span class="line">Lending practices</span>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:hello@chelcie.app">hello@chelcie.app</a>
+        <a href="mailto:legal@chelcie.app">legal@chelcie.app</a>
+        <a href="mailto:privacy@chelcie.app">privacy@chelcie.app</a>
+        <a href="mailto:security@chelcie.app">security@chelcie.app</a>
+           <a href="tel:+10000000000">+1 (000) 000-0000</a>
+           <span class="line" style="font-size:.8rem;margin-top:.5rem;line-height:1.5">123 Example Street, Suite 100<br>New York, NY 10001<br><em style="color:var(--muted-2)">placeholder contact — replace before going live</em></span>
+      </div>
+    </div>
+    <div class="foot-grid" style="margin-top:2rem">
+      <div style="grid-column:1/2">
+        <p class="line" style="font-family:var(--mono);font-size:.72rem;letter-spacing:.06em">
+          LENDING LAB · POWERED BY CHELCIE<br>
+          <span style="color:var(--muted-2)">Capital coordination &amp; small-loan access</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="discl">
+      <p><strong>Lending disclosure.</strong> Lending Lab is a lending service powered by Chelcie and delivered through our lending partners. Loans are <strong>subject to eligibility and credit approval by the lender of record</strong>; final terms and rates are disclosed within the application at the point of offer. All figures shown on this page are <strong>indicative only</strong> and do not constitute an offer, commitment, or pre-qualification of credit.</p>
+      <p><strong>Fair-lending.</strong> Lending Lab does not discriminate on the basis of race, color, religion, national origin, sex, marital status, age, or any other basis prohibited by the Equal Credit Opportunity Act or applicable federal and state law. We consider the credit history of all qualified applicants.</p>
+      <p><strong>For information only.</strong> This page is provided for informational purposes and is not legal, tax, or financial advice. Chelcie coordinates access to capital; it does not itself extend credit. See our Terms of Service and Privacy Policy for the full terms governing your use.</p>
+    </div>
+
+    <div class="copyrow">
+      <span>© <span id="yr">2025</span> Lending Lab · powered by Chelcie</span>
+      <span>Powered by Chelcie · Sandbox (for testing; replace with production before publishing)</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================ SCRIPTS ============================ -->
+<!--
+     ============================================================
+     EDIT BEFORE GOING LIVE — White-label integration (currently SANDBOX)
+      1. Search "env=a270d868" and swap BOTH anchors' href + the loader <script src>
+         to your PRODUCTION widget URLs.
+      2. The widget is click-driven: clicking any <a href="...env=... "> launches the
+         application. To auto-open on load, append ?env=…&brandId=… to the page URL.
+      3. Replace the placeholder footer address/phone with a real one.
+      4. "sandbox" wording & illustrative terms are placeholders — confirm with counsel.
+     ============================================================
+     Loan widget loader (required external). Keep tag + anchor exactly as issued.
+     -->
+<script src="https://sandbox-widget.lendflow.com/js/lendflow-loader.js"></script>
+<script>
+/* ---- lightweight page behavior. No framework, no dependencies. ---- */
+(function(){
+  "use strict";
+  var nav=document.getElementById('nav');
+  var toggle=document.getElementById('navToggle');
+  var menu=document.getElementById('mobileMenu');
+  var yr=document.getElementById('yr'); if(yr){yr.textContent=new Date().getFullYear();}
+
+  // header condense on scroll
+  var onScroll=function(){ nav.classList.toggle('scrolled', window.scrollY>8); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // mobile menu
+  if(toggle){
+    toggle.addEventListener('click', function(){
+      var open=menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open?'true':'false');
+    });
+    menu.addEventListener('click', function(e){ if(e.target.tagName==='A'){ menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }});
+  }
+
+  // reveal on scroll
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var items=document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    items.forEach(function(el){el.classList.add('in');});
+  }else{
+    var io=new IntersectionObserver(function(ents){
+      ents.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }});
+    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){io.observe(el);});
+  }
+
+  // amount / term estimator (illustrative only — not a quote)
+  var amt=document.getElementById('est-amount');
+  var amtOut=document.getElementById('est-amount-out');
+  var estOut=document.getElementById('est-out');
+  var termBtns=document.querySelectorAll('.est .terms button');
+  var MIN=2500, MAX=75000, STEP=2500;
+  function money(n){return '$'+Math.round(n).toLocaleString('en-US');}
+  function currentTerm(){
+    var b=document.querySelector('.est .terms button[aria-pressed="true"]');
+    return b?parseInt(b.dataset.mo,10):12;
+  }
+  function renderEst(){
+    var a=amt?parseInt(amt.value,10):15000;
+    var t=currentTerm();
+    if(amtOut){amtOut.textContent=money(a)+' · '+t+' mo';}
+    if(estOut){
+      var base=a/t;
+      var low=base, high=base*1.38; // illustrative cost band, NOT a stated APR
+      estOut.textContent=money(low)+' – '+money(high)+' / mo';
+    }
+  }
+  if(amt){
+    amt.min=MIN; amt.max=MAX; amt.step=STEP; amt.value=15000;
+    amt.addEventListener('input', renderEst);
+    termBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        termBtns.forEach(function(x){x.setAttribute('aria-pressed','false');});
+        btn.setAttribute('aria-pressed','true');
+        renderEst();
+      });
+    });
+    renderEst();
+  }
+
+  // The funding widget is click-driven: the loader (above) intercepts any click on an
+        // <a href="...env=..."> and launches the "Start funding" flow with those params.
+        // No inline mount is needed. If the loader fails to load, the anchors still
+        // navigate to the sandbox widget URL, so the page degrades to a normal link.
+        // Resilience: if the loader never loaded, open the CTA in a new tab so users
+        // are never left with a button that "did nothing."
+        window.addEventListener('load', function(){
+          setTimeout(function(){
+            document.querySelectorAll('a[href*="env="]').forEach(function(a){
+              a.dataset._llFallback = "1";
+              if (!a.target){ a.target = "_blank"; a.rel = "noopener"; }
+            });
+          }, 1200);
+        });
+})();
+</script>
+</body>
+</html>
