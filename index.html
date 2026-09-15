@@ -130,9 +130,6 @@ section{padding-block:var(--sec)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.85rem}
 .brand{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-weight:600;
   letter-spacing:.02em;color:var(--ink);font-size:1rem}
-.brand .mark{width:30px;height:30px;flex:0 0 auto;border-radius:8px;background:var(--emerald);position:relative}
-.brand .mark::before{content:"";position:absolute;inset:8px 8px 8px auto;width:5px;background:#EDE7D9}
-.brand .mark::after{content:"";position:absolute;left:13px;top:8px;width:16px;height:5px;background:#EDE7D9}
 .brand small{display:block;font-family:var(--mono);font-weight:400;font-size:.6rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted-2);margin-top:1px}
 .nav-links{display:none;align-items:center;gap:1.6rem;font-size:.9rem;font-weight:500;color:var(--ink-soft)}
@@ -262,7 +259,6 @@ footer{border-top:1px solid var(--line);background:var(--paper-2);padding-block:
 <nav class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="Lending Lab home">
-      <span class="mark" aria-hidden="true"></span>
       <span>Lending&nbsp;Lab<small>Powered by Chelcie</small></span>
     </a>
     <div class="nav-links">
@@ -636,7 +632,6 @@ footer{border-top:1px solid var(--line);background:var(--paper-2);padding-block:
     <div class="foot-grid">
       <div>
         <a class="brand" href="#top" style="margin-bottom:1rem">
-          <span class="mark" aria-hidden="true"></span>
           <span>Lending&nbsp;Lab<small>Powered by Chelcie</small></span>
         </a>
         <p class="line">Fast, transparent small loans for small businesses and <strong style="color:var(--ink-soft)">501(c)(3)</strong> charities — matched and delivered through our capital partners.</p>
